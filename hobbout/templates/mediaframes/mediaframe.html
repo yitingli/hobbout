@@ -1,0 +1,20 @@
+{% load thumbnail %}
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="frame-container">
+    <a href="{% url 'mediaframe:detail' owner_username mediaframe.pk %}">
+        {% if mediaframe.content_type == 'I' %}
+            {% thumbnail mediaframe.image_item.image FRAME_LIST_CROPPED crop='center' as im %}
+                <img src="{{ im.url }}" class="mediaframe-image" width="{{ im.width }}" height="{{ im.height }}"/>
+            {% endthumbnail %}
+        {% else %}
+            <img src="{% static 'img/video-default.jpg' %}" class="mediaframe-image" width="282" height="188"/>
+        {% endif %}
+        <div class="frame-description">
+            <p class="right"> {{ mediaframe.description }}# </p>
+            <span class="gray small clear-right right"> {{ mediaframe.created }}</span>
+            <span class="clear-right"></span>
+        </div>
+    </a>
+</div>

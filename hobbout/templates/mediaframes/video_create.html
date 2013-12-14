@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block navigation %}
+    {% include 'navigation.html' %}
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'mediaframe:video_create' owner_username %}" enctype="multipart/form-data">{% csrf_token %}
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+        {% endif %}
+        <table>
+            <tr>
+                <td>{{ form.description.label_tag }}</td>
+                <td>{{ form.description }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.album.label_tag }}</td>
+                <td>{{ form.album }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.video.label_tag }}</td>
+                <td>{{ form.video }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.video_code.label_tag }}</td>
+                <td>{{ form.video_code }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

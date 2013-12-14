@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head_special %}
+    <meta property="wb:webmaster" content="8d26f1baa72bf11f" />
+{% endblock %}
+
+{% block background %}
+    <div id="img-background" style="background-image:url('{{ background_image_url }}');"></div>
+{% endblock %}
+
+{% block body %}
+    <div id="index-container">
+        <a href="{% url 'user_home' 'yiting' %}">
+            <h1>{% trans 'Welcome to my Website' %}</h1>
+            <h3>{% trans 'Click to Enter' %}</h3>
+        </a>
+    </div>
+{% endblock %}

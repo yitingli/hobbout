@@ -1,0 +1,37 @@
+{% load thumbnail %}
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="album-container white">
+    <a href="{% url 'album:mediaframes' owner_username album.slug %}">
+        <p class="text-center">{{ album.name }}</p>
+        <div>
+            {% if album.cover %}
+                {% if album.cover.content_type == 'I' %}
+                    {% thumbnail album.cover.image_item.image ALBUM_COVER_CROPPED crop='center' as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
+                    {% endthumbnail %}
+                {% else %}
+                    <img src="{% static 'img/video-default.jpg' %}" width="{{ ALBUM_COVER_WIDTH }}" height="{{ ALBUM_COVER_HEIGHT }}"/>
+                {% endif %}
+            {% else %}
+                <img src="{% static 'img/image-default.jpg' %}" width="{{ ALBUM_COVER_WIDTH }}" height="{{ ALBUM_COVER_HEIGHT }}"/>
+            {% endif %}
+        </div>
+        <div class="album-thumb-div">
+            {% for thumb in album.get_album_thumb_frames %}
+                {% if thumb %}
+                    {% if thumb.content_type == 'I' %}
+                        {% thumbnail thumb.image_item.image FRAME_THUMB_CROPPED crop='center' as im %}
+                            <span class="thumb-span"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/></span>
+                        {% endthumbnail %}
+                    {% else %}
+                        <span class="thumb-span"><img src="{% static 'img/video-thumb-default.jpg' %}" width="{{ FRAME_THUMB_WIDTH }}" height="{{ FRAME_THUMB_WIDTH }}"/></span>
+                    {% endif %}
+                {% else %}
+                    <span class="thumb-span"><img src="{% static 'img/image-thumb-default.jpg' %}" width="{{ FRAME_THUMB_WIDTH }}" height="{{ FRAME_THUMB_WIDTH }}"/></span>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </a>
+</div>

@@ -1,0 +1,66 @@
+{% load staticfiles %}
+{% load compressed %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <title>
+            {% block page_title %}
+                HobbOut
+            {% endblock page_title %}
+        </title>
+
+        {% block stylesheets %}
+            {% compressed_css 'libs' %}
+            {% compressed_css 'ckeditor_custom' %}
+            {% compressed_css 'global' %}
+        {% endblock stylesheets %}
+
+        {% block head_special %}
+        {% endblock %}
+
+        {% block js_in_head %}
+            {% compressed_js 'libs' %}
+        {% endblock %}
+
+        <script>
+        {% comment %}
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-44456318-1', 'liyiting.net');
+            ga('send', 'pageview');
+        {% endcomment %}
+        </script>
+    </head>
+
+    <body>
+
+        {% block background %}
+            <div id="general-background"></div>
+        {% endblock %}
+
+        {% block body %}
+            <div class="navbar navbar-inverse navbar-custom-top">
+                {% block navigation %}
+                {% endblock %}
+            </div>
+            <div id='body-container'>
+                {% block body_container %}
+                    <div id="content">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+            <div id="bottom-bar" class="navbar navbar-inverse navbar-custom-bottom text-center">
+                <span id="bottom-text">{% trans 'Designed & Coded by Yiting Li' %}</span>
+            </div>
+            {% block js_in_body %}
+            {% endblock %}
+        {% endblock %}
+    </body>
+
+</html>

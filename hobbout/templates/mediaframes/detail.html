@@ -1,0 +1,63 @@
+{% extends 'user_page_base.html' %}
+{% load thumbnail %}
+{% load i18n %}
+{% load users_tags %}
+{% load compressed %}
+{% load staticfiles %}
+
+{% block content %}
+    <div id="mediaframe-detail-container" data-id="{{ mediaframe.id }}" class="shadow-and-radius">
+        <div id="mediaframe-detail-img-container">
+            {% if mediaframe.content_type == 'I' %}
+                {% thumbnail mediaframe.image_item.image FRAME_DETAIL upscale=False as im %}
+                    <img src="{{ im.url }}" class="mediaframe-detail-img middle" width="{{ im.width }}" height="{{ im.height }}"/>
+                {% endthumbnail %}
+            {% else %}
+                {% if mediaframe.video_item.video %}
+                    <script type="text/javascript" src="{{ STATIC_URL }}plugin/jwplayer/jwplayer.js"></script>
+                    <div id="jw-player" class="middle">Loading the player...</div>
+                    <script type="text/javascript">
+                        jwplayer("jw-player").setup({
+                            file: "{{ mediaframe.video_item.video.url }}",
+                            image: "{% static 'img/video-default.jpg' %}",
+                            width: 822,
+                            height: 480
+                        });
+                    </script>
+                    {% comment %}
+                    <video width="720" height="480" class="middle" controls="controls">
+                        <source src='{{ mediaframe.video_item.video.url }}' type="{{ mediaframe.video_item.video.content_type }}" />
+                        {% trans 'Your browser does not support the video tag.' %}'
+                    </video>
+                    {% endcomment %}
+                {% else %}
+                    {{ mediaframe.video_item.video_code|safe }}
+                {% endif %}
+            {% endif %}
+        </div>
+        {% if mediaframe.description %}
+            <p class="gray right"> {{ mediaframe.description }} </p>
+        {% endif %}
+        <p class="gray small clear-right right"> {{ mediaframe.created }}</p>
+        <p class="gray small clear-right right">{% trans 'Rating: ' %}
+            <span id="media-rating">{{ mediaframe.rating|floatformat:2 }}</span>&nbsp;&nbsp;
+            <span class="media-rate" data-rating="1">1&nbsp;</span>
+            <span class="media-rate" data-rating="2">2&nbsp;</span>
+            <span class="media-rate" data-rating="3">3&nbsp;</span>
+            <span class="media-rate" data-rating="4">4&nbsp;</span>
+            <span class="media-rate" data-rating="5">5</span>
+            <span id="media-rate-info"></span>
+        </p>
+        <span class="clear-right"></span>
+        {% if user.username == owner_username %}
+            <p><form action="{% url 'mediaframe:delete' owner_username mediaframe.pk %}"><input type="submit" class="btn btn-small right btn-custom" value="{% trans 'Delete' %}"></form></p>
+        {% endif %}
+        {% if mediaframe.content_type == 'I' %}
+            <a href="{{ mediaframe.image_item.image.url }}">{% trans 'Download Original Image' %}</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block js_in_body %}
+    {% compressed_js 'mediaframe' %}
+{% endblock %}

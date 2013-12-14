@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block navigation %}
+    {% include 'navigation.html' %}
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'album:create' owner_username %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>{{ form.name.label_tag }}</td>
+                <td>{{ form.name }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.is_public.label_tag }}</td>
+                <td>{{ form.is_public }}</td>
+            </tr>
+        </table>
+
+        {% load wysiwyg %}
+        {% wysiwyg_setup %}
+            <textarea id="id-description" name="description"></textarea>
+        {% wysiwyg_editor "id-description" %}
+
+        <input type="submit" value="Create Album" />
+    </form>
+{% endblock %}

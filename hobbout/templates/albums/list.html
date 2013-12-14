@@ -1,0 +1,36 @@
+{% extends 'user_page_base.html' %}
+{% load thumbnail %}
+{% load i18n %}
+{% load users_tags %}
+
+{% block content %}
+    {% if user.is_authenticated and user.username == owner_username %}
+        <div>
+            <a href="{% url 'album:create' owner_username %}">{% trans 'Create Album' %}</a>
+        </div>
+    {% endif %}
+    <div class="album-list-container left">
+        {% for album in albums %}
+            {% include 'albums/album.html' %}
+        {% endfor %}
+        <br>
+        {% if user.is_authenticated and user.username == owner_username %}
+            <h4> {% trans 'Private Albums:' %}</h4>
+            {% for album in private_albums %}
+                {% include 'albums/album.html' %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="album-sidebar-container right text-center">
+        <p>{% trans 'Popular' %}</p>
+        <hr>
+        {% for frame in popular_frames %}
+            {% thumbnail frame.image_item.image POPULAR_SIDEBAR as im %}
+            <a href="{% url 'mediaframe:detail' owner_username frame.pk %}">
+                <img class="popular-sidebar" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
+            </a>
+            {% endthumbnail %}
+        {% endfor %}
+    </div>
+    <br class="clear-both"/>
+{% endblock %}

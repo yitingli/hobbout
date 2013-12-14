@@ -1,0 +1,14 @@
+{% extends 'user_page_base.html' %}
+{% load i18n %}
+{% load users_tags %}
+
+{% block content %}
+    <div id="homepage-container" class="shadow-and-radius">
+        <div>
+            <p class="right">{{ owner.get_full_name }}</p>
+            <p class="clear-right right">{{ owner.email }}</p>
+            <p class="clear-right right">{{ owner.birth_date }}</p>
+        </div>
+        <div class="clear-right cke_contents_ltr">{{ owner.description|safe }}</div>
+    </div>
+{% endblock %}
