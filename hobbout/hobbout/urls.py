@@ -4,8 +4,8 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 
-from .views import HomeView, UserHomeView
-from blogs.views import BlogDetailView
+from .views import HomeView
+
 
 admin.autodiscover()
 
@@ -23,13 +23,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^(?P<username>[-_\w]+)/$', UserHomeView.as_view(), name='user_home'),
-    url(r'^(?P<username>[-_\w]+)/microblog/', include('microblogs.urls', namespace='microblog')),
-    url(r'^(?P<username>[-_\w]+)/blog/', include('blogs.urls', namespace='blog')),
-    url(r'^(?P<username>[-_\w]+)/noteboard/', include('noteboards.urls', namespace='noteboard')),
-    url(r'^(?P<username>[-_\w]+)/album/', include('albums.urls', namespace='album')),
-    url(r'^(?P<username>[-_\w]+)/mediaframe/', include('mediaframes.urls', namespace='mediaframe')),
-    url(r'^(?P<username>[-_\w]+)/experience/', include('experience.urls', namespace='exp')),
+    url(r'^admin/', include('albums.urls', namespace='album')),
 
 )
 

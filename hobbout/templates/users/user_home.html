@@ -3,12 +3,35 @@
 {% load users_tags %}
 
 {% block content %}
-    <div id="homepage-container" class="shadow-and-radius">
-        <div>
-            <p class="right">{{ owner.get_full_name }}</p>
-            <p class="clear-right right">{{ owner.email }}</p>
-            <p class="clear-right right">{{ owner.birth_date }}</p>
+    <div id="left-container" class="shadow left">
+        <div id="left-user-info-container">
+            <div class="avatar-image">
+                <img src="{% get_avatar user AVATAR_TINY_CROPPED %}" width="{{ AVATAR_TINY }}" height="{{ AVATAR_TINY }}" />
+            </div>
+            <div>
+                <p class="">{{ user.get_full_name }}</p>
+                <p class="">{{ user.email }}</p>
+                {% if user.birth_date %}
+                    <p class="">{{ user.birth_date }}</p>
+                {% endif %}
+            </div>
+            <div>{{ user.brief_description }}</div>
         </div>
-        <div class="clear-right cke_contents_ltr">{{ owner.description|safe }}</div>
+        <hr style="margin-top: 10px; margin-bottom: 10px">
+        <div class="btn-group-vertical" style="width: 200px;">
+            {% for group in user.get_groups %}
+                <button type="button" class="btn btn-reverse">
+                    <p>{{ group.name }}</p>
+                    <p class="small gray">{{ group.area }}</p>
+                    {% if group.location %}
+                        <p class="small gray">{{ group.location }}</p>
+                    {% endif %}
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="right-container" class="shadow right">
+    </div>
+    <div class="clear-both">
     </div>
 {% endblock %}

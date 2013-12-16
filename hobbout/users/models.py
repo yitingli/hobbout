@@ -13,6 +13,7 @@ from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
 
 from albums.models import Album
+from groups.models import UserGroupBridge, Group
 
 
 class TingUserManager(BaseUserManager):
@@ -125,6 +126,13 @@ class TingUser(PermissionsMixin, AbstractBaseUser):
             return self.avatar.get_image(geometry, crop).url
         else:
             return settings.DEFAULT_AVATAR_LOCATION + geometry + '.jpg'
+
+    def get_groups(self):
+        group_bridges = UserGroupBridge.objects.filter(user=self)
+        groups = []
+        for bridge in group_bridges:
+            groups.append(bridge.group)
+        return groups
 
     def get_albums(self, max_id, size=settings.PAGE_SIZE['ALBUM'], public=True):
         criteria = Q(owner=self)

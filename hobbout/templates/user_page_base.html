@@ -6,25 +6,8 @@
 {% endblock %}
 
 {% block body_container %}
-    <div id="header-container">
-        <div id="header-profile" data-id="{{ owner.id }}">
-            {% block profile_summary %}
-                {% include 'users/profile_summary.html' %}
-            {% endblock %}
-        </div>
-    </div>
-    <div id="content-container" class="white">
+    <div id="content-container">
         {% block content %}
-            <div id="content-main" class="left">
-                {% block content_main %}
-                {% endblock %}
-            </div>
-            <div id="content-sidebar" class="right">
-                {% block content_sidebar %}
-                    <p align="center">{% trans 'Side Bar' %}</p>
-                {% endblock %}
-            </div>
-            <br class="clear-both"/>
         {% endblock %}
     </div>
 {% endblock %}

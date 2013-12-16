@@ -13,7 +13,6 @@ class MediaFrame(TimeStampedModel):
     TYPE_IMAGE = 'I'
     TYPE_VIDEO = 'V'
 
-    album = models.ForeignKey('albums.Album')
     owner = models.ForeignKey('users.TingUser')
     description = models.CharField(max_length=500, default='', blank=True)
     """
@@ -30,9 +29,6 @@ class MediaFrame(TimeStampedModel):
 
     def __unicode__(self):
         return self.description
-
-    def get_absolute_url(self):
-        return reverse('album:list', kwargs={'username': self.owner.username})
 
     def get_album_thumb_image_url(self):
         return self.image_item

@@ -17,26 +17,6 @@ class BasePaginationMixin(object):
         return context
 
 
-class MicroBlogPaginationMixin(BasePaginationMixin):
-
-    PAGE_SIZE = settings.PAGE_SIZE['MICROBLOG']
-
-
-class NoteBoardPaginationMixin(BasePaginationMixin):
-
-    PAGE_SIZE = settings.PAGE_SIZE['NOTEBOARD']
-
-
-class NotePaginationMixin(BasePaginationMixin):
-
-    PAGE_SIZE = settings.PAGE_SIZE['NOTE']
-
-
-class BlogPaginationMixin(BasePaginationMixin):
-
-    PAGE_SIZE = settings.PAGE_SIZE['BLOG']
-
-
 class AlbumPaginationMixin(BasePaginationMixin):
 
     PAGE_SIZE = settings.PAGE_SIZE['ALBUM']
@@ -53,8 +33,3 @@ class BasePaginationAPIMixin(object):
         self.max_id = int(request.GET.get('max_id', '0'))
         self.size = self.PAGE_SIZE
         return self.max_id
-
-
-class MicroBlogPaginationAPIMixin(BasePaginationAPIMixin):
-
-    PAGE_SIZE = settings.PAGE_SIZE['MICROBLOG']

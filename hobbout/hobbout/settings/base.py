@@ -114,20 +114,6 @@ PIPELINE_JS = {
         'output_filename': 'js/site.js',
     },
 
-    'note': {
-        'source_filenames': (
-            'js/note.js',
-        ),
-        'output_filename': 'js/note.js',
-    },
-
-    'microblog': {
-        'source_filenames': (
-            'js/microblog.js',
-        ),
-        'output_filename': 'js/microblog.js',
-    },
-
     'mediaframe': {
         'source_filenames': (
             'js/mediaframe.js',
@@ -227,14 +213,12 @@ INSTALLED_APPS = (
     'widget_tweaks',
 
     # My apps
-    'albums',
-    'blogs',
     'ckeditor',
-    'experience',
-    'microblogs',
+    'groups',
+    'locations',
     'mediabox',
     'mediaframes',
-    'noteboards',
+    'topics',
     'users',
 )
 
@@ -292,7 +276,9 @@ PAGE_SIZE = {
 
 IMAGE_SIZE = {
 
+    'AVATAR_TINY': '50',
     'AVATAR_SMALL': '96',
+    'AVATAR_TINY_CROPPED': '50x50',
     'AVATAR_SMALL_CROPPED': '96x96',
 
     'MICROBLOG_IMAGE': '533x400',

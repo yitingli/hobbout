@@ -4,7 +4,7 @@ from .models import MediaFrame, FrameComment
 
 
 class MediaFrameAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'owner', 'album', 'description', 'content_type')
+    list_display = ('pk', 'owner', 'description', 'content_type')
     search_fields = ['pk', 'owner']
 
 admin.site.register(MediaFrame, MediaFrameAdmin)
