@@ -50,7 +50,6 @@ IMAGE_PATH_PREFIX = 'media/images/origin'
 FILE_PATH_PREFIX = 'media/files/origin'
 VIDEO_PATH_PREFIX = 'media/videos/origin'
 
-"""
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -58,8 +57,6 @@ CACHES = {
         'MAX_ENTRIES': 10000,
     }
 }
-"""
-
 
 if DEBUG:
 
