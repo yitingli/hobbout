@@ -6,12 +6,12 @@ ALLOWED_HOSTS = ['54.193.56.228']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',   # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        # To create one in MySQL: CREATE DATABASE sitedb CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+        # To create one in MySQL: CREATE DATABASE hobbout CHARACTER SET utf8 COLLATE utf8_unicode_ci;
         'NAME': 'hobbout',                    # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': 'yitingvvv',
-        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'HOST': 'hobbout.cumfqnmigugc.us-west-1.rds.amazonaws.com',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '3306',                      # Set to empty string for default.
     }
 }
