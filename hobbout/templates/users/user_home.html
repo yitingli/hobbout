@@ -1,15 +1,19 @@
 {% extends 'user_page_base.html' %}
 {% load i18n %}
 {% load users_tags %}
+{% load compressed %}
 
 {% block content %}
     <div id="left-container" class="shadow left">
         <div id="left-user-info-container">
-            <div class="avatar-image">
+            <div class="avatar-image left">
                 <img src="{% get_avatar user AVATAR_TINY_CROPPED %}" width="{{ AVATAR_TINY }}" height="{{ AVATAR_TINY }}" />
             </div>
-            <div>
-                <p class="">{{ user.get_full_name }}</p>
+            <div class="right" style="width: 130px;">
+                <p class="bold" style="margin-top: 5px;">{{ user.get_full_name }}</p>
+                <p class="small gray" >@{{ user.username }}</p>
+            </div>
+            <div class="clear-both" style="padding-top: 10px;">
                 <p class="">{{ user.email }}</p>
                 {% if user.birth_date %}
                     <p class="">{{ user.birth_date }}</p>
@@ -35,22 +39,69 @@
     </div>
     <div id="right-container" class="shadow right text-center">
         <div class="btn-group btn-group-lg middle">
-            <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn">{% trans 'Notices' %}</button>
-            <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn">{% trans 'Discussions' %}</button>
-            <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn">{% trans 'Activities' %}</button>
+            {% if group %}
+                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn">{% trans 'Notices' %}</button>
+                <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn">{% trans 'Discussions' %}</button>
+                <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn">{% trans 'Activities' %}</button>
+            {% else %}
+            {% endif %}
         </div>
         <div>
+            {% if post_permission %}
+                <div id="post-container" class="topic-container">
+                    <p class="bold gray" style="margin-bottom: 5px;">{% trans 'New Post:' %}</p>
+                    <textarea id="new-post-name" rows="1" cols="76" style="resize: none;"></textarea>
+                    <textarea id="new-post-content" rows="3" cols="76"></textarea>
+                    <button id="new-post-btn" data-type="{{ topic_type }}" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Post' %}</button>
+                    <div class="clear-both"></div>
+                </div>
+            {% endif %}
             {% for topic in topics %}
-                <div data-id="{{ topic.id }}">
-                    <p>{{ topic.name }}</p>
-                    <p>{{ topic.content }}</p>
-                    {% for comment in topic.get_comments %}
-                        <p class="small">{{ comment.content }}</p>
-                    {% endfor %}
+                <div class="topic-container" data-id="{{ topic.id }}">
+                    <div class="avatar-image left">
+                        <img src="{% get_avatar topic.owner AVATAR_TINY_CROPPED %}" width="{{ AVATAR_TINY }}" height="{{ AVATAR_TINY }}" />
+                    </div>
+                    <div class="left" style="margin-left: 10px">
+                        <p style="margin-top: 5px;">
+                            <span class="bold" >{{ topic.owner.get_full_name }}</span>
+                            <span class="small gray">@{{ topic.owner.username }}</span>
+                            {% comment %}
+                            <span class="gray" style="font-size: 10px;">{{ topic.created|date:"SHORT_DATETIME_FORMAT" }}</span>
+                            {% endcomment %}
+                        </p>
+                        <p class="bold" style="font-size: 18px;">{{ topic.name }}</p>
+                    </div>
+                    <div class="clear-both" style="margin-left: 20px; margin-right: 5px;">
+                        <p style="padding-top: 5px;">{{ topic.content }}</p>
+                        <hr style="margin-top: 5px; margin-bottom: 5px">
+                        <textarea id="new-comment-{{ topic.id }}" rows="1" cols="65" style="height: 30px;"></textarea>
+                        <button data-id="{{ topic.id }}" class="new-comment-btn btn right small" style="height: 30px;">{% trans 'Comment' %}</button>
+                        {% for comment in topic.get_comments %}
+                        <div class="avatar-image-xtiny left" style="margin-top: 5px;">
+                            <img src="{% get_avatar comment.owner AVATAR_XTINY_CROPPED %}" width="{{ AVATAR_XTINY }}" height="{{ AVATAR_XTINY }}" />
+                        </div>
+                        <div style="margin-left: 30px;">
+                            <div style="margin-right: 10px;">
+                                <p style="margin-top: 5px;">
+                                    <span class="small bold" >{{ comment.owner.get_full_name }}</span>
+                                    <span class="small gray">@{{ comment.owner.username }}</span>
+                                    {% comment %}
+                                    <span class="gray right" style="font-size: 10px;">{{ comment.created|date:"SHORT_DATETIME_FORMAT" }}</span>
+                                    {% endcomment %}
+                                </p>
+                            </div>
+                            <p class="clear-both small" style="">{{ comment.content }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
     <div class="clear-both">
     </div>
+{% endblock %}
+
+{% block js_in_body %}
+    {% compressed_js 'topic' %}
 {% endblock %}

@@ -9,6 +9,14 @@ class Topic(TimeStampedModel):
     topic_type = models.CharField(max_length=1, default='D')
     owner = models.ForeignKey('users.TingUser')
     group = models.ForeignKey('groups.Group')
+    comment_num = models.IntegerField(default=0, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def get_comments(self):
+        comments = TopicComment.objects.filter(topic=self).order_by('-created')
+        return comments
 
 
 class TopicComment(TimeStampedModel):

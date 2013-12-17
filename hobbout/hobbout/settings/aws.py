@@ -20,10 +20,10 @@ DATABASES = {
 AWS_ACCESS_KEY_ID = 'AKIAIS4JPQBNHQAHBWIA'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_S3_SECURE_URLS = False
-#AWS_S3_CUSTOM_DOMAIN = 's3-ca.liyiting.net'
-AWS_S3_CUSTOM_DOMAIN = 'cloudfront-web.liyiting.net'
+
+AWS_S3_CUSTOM_DOMAIN = 'dr7777o8hif8c.cloudfront.net'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_STORAGE_BUCKET_NAME = 's3-ca.liyiting.net'
+AWS_STORAGE_BUCKET_NAME = 's3.hobbout.com'
 
 AWS_HEADERS = {
     'Cache-Control': 'max-age=31536000',
@@ -33,9 +33,9 @@ AWS_STATIC_HEADERS = {
     'Cache-Control': 'max-age=2592000',
 }
 
-#AWS_STATIC_S3_CUSTOM_DOMAIN = 'assets-ca.liyiting.net'
-AWS_STATIC_S3_CUSTOM_DOMAIN = 'cloudfront-assets.liyiting.net'
-AWS_STATIC_STORAGE_BUCKET_NAME = 'assets-ca.liyiting.net'
+
+AWS_STATIC_S3_CUSTOM_DOMAIN = 'dhnbhn87vf578.cloudfront.net'
+AWS_STATIC_STORAGE_BUCKET_NAME = 'assets.hobbout.com'
 AWS_STATIC_PATH = 'assets'
 
 AWS_PRELOAD_METADATA = True
@@ -50,6 +50,7 @@ IMAGE_PATH_PREFIX = 'media/images/origin'
 FILE_PATH_PREFIX = 'media/files/origin'
 VIDEO_PATH_PREFIX = 'media/videos/origin'
 
+"""
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -57,6 +58,7 @@ CACHES = {
         'MAX_ENTRIES': 10000,
     }
 }
+"""
 
 
 if DEBUG:

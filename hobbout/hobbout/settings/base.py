@@ -108,18 +108,13 @@ PIPELINE_JS = {
         'output_filename': 'js/libs.js',
     },
 
-    'site': {
+    'topic': {
         'source_filenames': (
+            'js/topic.js',
         ),
-        'output_filename': 'js/site.js',
+        'output_filename': 'js/topic.js',
     },
 
-    'mediaframe': {
-        'source_filenames': (
-            'js/mediaframe.js',
-        ),
-        'output_filename': 'js/mediaframe.js',
-    },
 }
 
 PIPELINE_CSS = {
@@ -277,8 +272,10 @@ PAGE_SIZE = {
 
 IMAGE_SIZE = {
 
+    'AVATAR_XTINY': '23',
     'AVATAR_TINY': '50',
     'AVATAR_SMALL': '96',
+    'AVATAR_XTINY_CROPPED': '20x20',
     'AVATAR_TINY_CROPPED': '50x50',
     'AVATAR_SMALL_CROPPED': '96x96',
 

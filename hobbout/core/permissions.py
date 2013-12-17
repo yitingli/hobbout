@@ -1,5 +1,26 @@
 from rest_framework import permissions
 
+from groups.models import Group, UserGroupBridge
+
+
+class PostNoticePermission(permissions.BasePermission):
+    """
+    Custom permission to check whether allow to post notice.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        if obj.topic_type == 'N':
+            try:
+                bridge = UserGroupBridge.objects.get(user=request.user, group=obj)
+                return bridge.role > 0
+            except UserGroupBridge.DoesNotExist:
+                return False
+        else:
+            return True
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """

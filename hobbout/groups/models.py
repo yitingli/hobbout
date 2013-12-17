@@ -28,15 +28,15 @@ class Group(TimeStampedModel):
         super(Group, self).save(*args, **kwargs)
 
     def get_notices(self):
-        topics = Topic.objects.filter(group=self, topic_type='N')
+        topics = Topic.objects.filter(group=self, topic_type='N').order_by('-modified')
         return topics
 
     def get_discussions(self):
-        discussions = Topic.objects.filter(group=self, topic_type='D')
+        discussions = Topic.objects.filter(group=self, topic_type='D').order_by('-modified')
         return discussions
 
     def get_activities(self):
-        activities = Activity.objects.filter(group=self)
+        activities = Activity.objects.filter(group=self).order_by('-modified')
         return activities
 
 

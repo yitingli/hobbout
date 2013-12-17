@@ -1,11 +1,12 @@
 # core/api.py
 from django.conf.urls import patterns, url
 
+from topics.views import TopicCreateAPIView, TopicCommentCreateAPIView
+
 
 urlpatterns = patterns('',
-    """
-    url(r'^noteboard/note/create/$', NoteCreateAPIView.as_view(), name='noteboard-note-create'),
-    url(r'^user/(?P<pk>[0-9]+)/microblogs/$', MicroBlogListAPIView.as_view(), name='microblog-list'),
-    url(r'^mediaframe/(?P<pk>[0-9]+)/rate/$', MediaFrameRateAPIView.as_view(), name='mediaframe-rate'),
-    """
+
+    url(r'^topic/create/$', TopicCreateAPIView.as_view(), name='topic-create'),
+    url(r'^topic/comment/create/$', TopicCommentCreateAPIView.as_view(), name='comment-create'),
+
 )
