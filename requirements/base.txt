@@ -25,6 +25,7 @@ djangorestframework==2.3.6
 futures==2.1.4
 httplib2==0.8
 oauth2==1.5.211
+python-memcached==1.53
 python-openid==2.2.5
 python-slugify==0.0.6
 six==1.4.1
