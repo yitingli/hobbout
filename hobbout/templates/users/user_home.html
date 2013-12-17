@@ -20,17 +20,36 @@
         <hr style="margin-top: 10px; margin-bottom: 10px">
         <div class="btn-group-vertical" style="width: 200px;">
             {% for group in user.get_groups %}
-                <button type="button" class="btn btn-reverse">
-                    <p>{{ group.name }}</p>
-                    <p class="small gray">{{ group.area }}</p>
+                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'"
+                    type="button" class="btn" style="width: 200px;">
+                    <p class="bold">{{ group.name }}</p>
+                    <p class="small white">{{ group.area }}</p>
                     {% if group.location %}
-                        <p class="small gray">{{ group.location }}</p>
+                        <p class="small white">{{ group.location }}</p>
                     {% endif %}
                 </button>
+                <hr style="margin-top: 2px; margin-bottom: 2px">
             {% endfor %}
+            <button type="button" class="btn bold" style="width: 200px;">+</button>
         </div>
     </div>
-    <div id="right-container" class="shadow right">
+    <div id="right-container" class="shadow right text-center">
+        <div class="btn-group btn-group-lg middle">
+            <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn">{% trans 'Notices' %}</button>
+            <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn">{% trans 'Discussions' %}</button>
+            <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn">{% trans 'Activities' %}</button>
+        </div>
+        <div>
+            {% for topic in topics %}
+                <div data-id="{{ topic.id }}">
+                    <p>{{ topic.name }}</p>
+                    <p>{{ topic.content }}</p>
+                    {% for comment in topic.get_comments %}
+                        <p class="small">{{ comment.content }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
     <div class="clear-both">
     </div>

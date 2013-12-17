@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^admin/', include('albums.urls', namespace='album')),
+    url(r'^group/(?P<pk>[0-9]+)/', include('groups.urls', namespace='group')),
 
 )
 

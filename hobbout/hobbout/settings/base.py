@@ -213,6 +213,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
 
     # My apps
+    'activities',
     'ckeditor',
     'groups',
     'locations',

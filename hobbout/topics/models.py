@@ -6,6 +6,7 @@ class Topic(TimeStampedModel):
 
     name = models.CharField(max_length=255)
     content = models.TextField(default="", blank=True)
+    topic_type = models.CharField(max_length=1, default='D')
     owner = models.ForeignKey('users.TingUser')
     group = models.ForeignKey('groups.Group')
 

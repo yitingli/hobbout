@@ -2,6 +2,9 @@ from django.db import models
 from model_utils.models import TimeStampedModel
 from slugify import slugify
 
+from topics.models import Topic
+from activities.models import Activity
+
 
 class Group(TimeStampedModel):
 
@@ -23,6 +26,18 @@ class Group(TimeStampedModel):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Group, self).save(*args, **kwargs)
+
+    def get_notices(self):
+        topics = Topic.objects.filter(group=self, topic_type='N')
+        return topics
+
+    def get_discussions(self):
+        discussions = Topic.objects.filter(group=self, topic_type='D')
+        return discussions
+
+    def get_activities(self):
+        activities = Activity.objects.filter(group=self)
+        return activities
 
 
 class UserGroupBridge(TimeStampedModel):
