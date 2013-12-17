@@ -15,7 +15,7 @@ class PostNoticePermission(permissions.BasePermission):
 
         if obj.topic_type == 'N':
             try:
-                bridge = UserGroupBridge.objects.get(user=request.user, group=obj)
+                bridge = UserGroupBridge.objects.get(user=request.user, group=obj.group)
                 return bridge.role > 0
             except UserGroupBridge.DoesNotExist:
                 return False
