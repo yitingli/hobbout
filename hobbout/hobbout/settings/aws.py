@@ -1,6 +1,6 @@
 from base import *
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['54.193.56.228']
 
 DATABASES = {
@@ -65,7 +65,7 @@ if DEBUG:
 
     THUMBNAIL_DEBUG = True
 
-    INTERNAL_IPS = ('127.0.0.1')
+    INTERNAL_IPS = ('127.0.0.1', '160.39.172.40')
 
     MIDDLEWARE_CLASSES += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
