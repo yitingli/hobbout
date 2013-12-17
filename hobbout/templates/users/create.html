@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block body_container %}
-    <div class="account-container">
+    <div class="account-container text-center">
         <form class="sign-up-form" method="post" action="{% url 'register' %}">
             {% csrf_token %}
             {% if form.errors %}
