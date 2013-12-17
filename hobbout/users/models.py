@@ -12,7 +12,6 @@ from django.utils import timezone
 from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
 
-from albums.models import Album
 from groups.models import UserGroupBridge, Group
 
 
@@ -30,9 +29,6 @@ class TingUserManager(BaseUserManager):
                           last_login=now, date_joined=now, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-        album = Album(owner=user, name="MicroBlog", is_public=False,\
-                      description="Used as default album for microblog images")
-        album.save()
         return user
 
     def create_superuser(self, email, username, password, **extra_fields):
