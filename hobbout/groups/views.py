@@ -17,14 +17,15 @@ class GroupNoticesView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(GroupNoticesView, self).get_context_data(**kwargs)
         context['topics'] = self.object.get_notices()
+        context['topic_type'] = 'N'
         if self.request.user.is_authenticated():
             try:
                 bridge = UserGroupBridge.objects.get(user=self.request.user, group=self.object)
                 context['post_permission'] = bridge.role > 0
+                return context
             except UserGroupBridge.DoesNotExist:
                 pass
         context['post_permission'] = False
-        context['topic_type'] = 'N'
         return context
 
 
