@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-
 {% load i18n %}
+{% load widget_tweaks %}
 
 {% block body_container %}
     <div class="account-container text-center">
@@ -11,16 +11,16 @@
             {% endif %}
             <table>
                 <tr>
-                    <td>{{ form.email }}</td>
+                    <td>{{ form.email|attr:"style:width: 230px;"  }}</td>
                 </tr>
                 <tr>
-                    <td>{{ form.username }}</td>
+                    <td>{{ form.username|attr:"style:width: 230px;"  }}</td>
                 </tr>
                 <tr>
-                    <td>{{ form.password }}</td>
+                    <td>{{ form.password|attr:"style:width: 230px;"  }}</td>
                 </tr>
             </table>
-            <input type="submit" class="btn btn-primary btn-block" value="Register" />
+            <input type="submit" class="btn btn-primary btn-block" style="margin-top: 2px;" value="Register" />
         </form>
         <a href="{% url 'login' %}">{% trans 'Already have acount? Login' %}</a>
     </div>
