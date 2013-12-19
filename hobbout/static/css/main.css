@@ -276,6 +276,14 @@ textarea:focus {
     margin-top: 200px;
 }
 
+#account-update-container {
+    width: 770px;
+    background-color: rgba(255,255,255, .9);
+    padding: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
 .sign-up-form input {
     width: 100%;
     padding: 11px 10px 8px 10px;

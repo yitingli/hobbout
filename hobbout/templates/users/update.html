@@ -6,60 +6,62 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <script type="text/javascript" src="{{ STATIC_URL }}plugin/ckeditor/ckeditor.js"></script>
-    {% if form.errors %}
-        <p>{{ form.errors }}</p>
-    {% endif %}
-    <img src="{% get_avatar user AVATAR_SMALL_CROPPED %}" width="{{ AVATAR_SMALL }}" height="{{ AVATAR_SMALL }}" >
-    <form method="post" action="{% url 'user_update' %}" enctype="multipart/form-data"> {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.image.label_tag }}</td>
-                <td>{{ form.image }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.email.label_tag }}</td>
-                <td>{{ form.email }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <a href="{% url 'user_password_change' %}">{% trans 'Change Password' %}</a>
-            </tr>
-            <tr>
-                <td>{{ form.first_name.label_tag }}</td>
-                <td>{{ form.first_name }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.last_name.label_tag }}</td>
-                <td>{{ form.last_name }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.birth_date.label_tag }}</td>
-                <td>{{ form.birth_date }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.brief_description.label_tag }}</td>
-                <td>{{ form.brief_description|attr:"rows:3"|attr:"cols:50" }}</td>
-            </tr>
-        </table>
-
-        <div>
-            {{ form.description.label_tag }}<br>
-            <textarea id="id-description" name="description">{{ user.description }}</textarea>
-            <script>
-                CKEDITOR.config.width = 650
-                // CKEDITOR.config.width = '75%'
-                CKEDITOR.replace('id-description');
-            </script>
-        </div>
-
-        <input type="submit" value="{% trans 'Save' %}" />
-        {% if update_success %}
-            <p>{% trans 'Form saved' %}</p>
+    <div id="account-update-container" class="shadow radius">
+        <script type="text/javascript" src="{{ STATIC_URL }}plugin/ckeditor/ckeditor.js"></script>
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
         {% endif %}
-    </form>
+        <img src="{% get_avatar user AVATAR_SMALL_CROPPED %}" width="{{ AVATAR_SMALL }}" height="{{ AVATAR_SMALL }}" >
+        <form method="post" action="{% url 'user_update' %}" enctype="multipart/form-data"> {% csrf_token %}
+            <table>
+                <tr>
+                    <td>{{ form.image.label_tag }}</td>
+                    <td>{{ form.image }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.email.label_tag }}</td>
+                    <td>{{ form.email }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.username.label_tag }}</td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <a href="{% url 'user_password_change' %}">{% trans 'Change Password' %}</a>
+                </tr>
+                <tr>
+                    <td>{{ form.first_name.label_tag }}</td>
+                    <td>{{ form.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.last_name.label_tag }}</td>
+                    <td>{{ form.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.birth_date.label_tag }}</td>
+                    <td>{{ form.birth_date }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.brief_description.label_tag }}</td>
+                    <td>{{ form.brief_description|attr:"rows:3"|attr:"cols:50" }}</td>
+                </tr>
+            </table>
 
+            <div>
+                {{ form.description.label_tag }}<br>
+                <textarea id="id-description" name="description">{{ user.description }}</textarea>
+                <script>
+                    CKEDITOR.config.width = 650
+                    // CKEDITOR.config.width = '75%'
+                    CKEDITOR.replace('id-description');
+                </script>
+            </div>
+
+            <input type="submit" class="btn btn-primary right" style="margin-top: 5px;" value="{% trans 'Save' %}" />
+            <span class="clear-right"></span>
+            {% if update_success %}
+                <p>{% trans 'Form saved' %}</p>
+            {% endif %}
+        </form>
+    </div>
 {% endblock %}
