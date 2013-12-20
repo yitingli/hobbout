@@ -115,6 +115,13 @@ PIPELINE_JS = {
         'output_filename': 'js/topic.js',
     },
 
+    'group': {
+        'source_filenames': (
+            'js/group.js',
+        ),
+        'output_filename': 'js/group.js',
+    },
+
 }
 
 PIPELINE_CSS = {

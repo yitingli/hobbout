@@ -4,6 +4,9 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, TemplateView
+from rest_framework import permissions, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from users.models import TingUser
 from groups.models import Group, UserGroupBridge
@@ -62,3 +65,8 @@ class GroupAddView(TemplateView):
         context = super(GroupAddView, self).get_context_data(**kwargs)
         context['groups'] = Group.objects.all()
         return context
+
+
+class GroupCreateAPIView(APIView):
+
+    pass

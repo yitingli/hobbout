@@ -50,15 +50,29 @@
             <div id="post-container" class="topic-container">
                 <p class="bold gray" style="margin-bottom: 5px;">{% trans 'New Group:' %}</p>
                 <textarea id="new-post-name" rows="1" style="resize: none; width: 420px;">{% trans 'Name' %}</textarea>
-                <textarea id="new-post-capacity" rows="1" style="resize: none; width: 206px;">{% trans 'Area' %}</textarea>
-                <textarea id="new-post-place" rows="1" style="resize: none; width: 629px;">{% trans 'Brief' %}</textarea>
-                <textarea id="new-post-content" rows="3" style="width: 629px;">{% trans 'Description' %}</textarea>
-                <button id="new-act-post-btn" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Create' %}</button>
+                <textarea id="new-post-area" rows="1" style="resize: none; width: 206px;">{% trans 'Area' %}</textarea>
+                <textarea id="new-post-bdes" rows="1" style="resize: none; width: 629px;">{% trans 'Brief Description' %}</textarea>
+                <textarea id="new-post-des" rows="3" style="width: 629px;">{% trans 'Description' %}</textarea>
+                <button id="new-group-post-btn" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Create' %}</button>
                 <div class="clear-both"></div>
             </div>
-            {% for topic in topics %}
-                <div class="topic-container" data-id="{{ topic.id }}">
-                    
+            {% for group in groups %}
+                <div class="topic-container" data-id="{{ group.id }}">
+                    <div class="left" style="margin-left: 10px">
+                        <p style="margin-top: 5px;">
+                            <span class="small gray">@{{ group.owner.username }}</span>
+                        </p>
+                        <p class="bold" style="font-size: 23px;">{{ group.name }}</p>
+                    </div>
+                    <div class="clear-both" style="margin-left: 10px; margin-right: 5px;">
+                        <p class="small gray bold">{% trans 'Area: ' %}{{ group.area }}</p>
+                        <p class="small gray bold">{% trans 'Member Num: ' %}{{ group.get_member_num }}</p>
+                        <p class="small gray bold">{% trans 'Creation Date: ' %}{{ group.created|date:"D. M d Y" }}</p>
+                        <p>{{ group.brief_description }}</p>
+                        <p>{{ group.description }}</p>
+                        <button id="join-group-btn" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Join' %}</button>
+                        <div class="clear-both"></div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
@@ -68,5 +82,5 @@
 {% endblock %}
 
 {% block js_in_body %}
-    {% compressed_js 'topic' %}
+    {% compressed_js 'group' %}
 {% endblock %}

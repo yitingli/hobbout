@@ -39,6 +39,9 @@ class Group(TimeStampedModel):
         activities = Activity.objects.filter(group=self).order_by('-modified')
         return activities
 
+    def get_member_num(self):
+        return UserGroupBridge.objects.filter(group=self).count()
+
 
 class UserGroupBridge(TimeStampedModel):
 
