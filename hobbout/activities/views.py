@@ -47,7 +47,7 @@ class UserActivityBridgeCreateAPIView(APIView):
         serializer = UserActivityBridgeCreateSerializer(data=request.DATA, context={'user': request.user})
         if serializer.is_valid():
             serializer.save()
-            serializer.activity.p_num = F('p_num') + 1
+            serializer.object.activity.p_num = F('p_num') + 1
             serializer.object.activity.save()
             return Response({
                                 'id': serializer.object.pk,
