@@ -26,10 +26,10 @@
             {% for agroup in user.get_groups %}
                 <button onclick="window.location.href='{% url 'group:notices' agroup.pk %}'"
                     type="button" class="btn" style="width: 200px;">
-                    <p class="bold">{{ agroup.name }}</p>
-                    <p class="small white">{{ agroup.area }}</p>
+                    <p class="">{{ agroup.name }}</p>
+                    <p class="small gray">{{ agroup.area }}</p>
                     {% if agroup.location %}
-                        <p class="small white">{{ agroup.location }}</p>
+                        <p class="small gray">{{ agroup.location }}</p>
                     {% endif %}
                 </button>
                 <hr style="margin-top: 2px; margin-bottom: 2px">

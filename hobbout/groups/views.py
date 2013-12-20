@@ -76,6 +76,8 @@ class GroupCreateAPIView(APIView):
         serializer = GroupCreateSerializer(data=request.DATA, context={'user': request.user})
         if serializer.is_valid():
             serializer.save()
+            bridge = UserGroupBridge(user=request.user, group=serializer.object, role=5)
+            bridge.save()
             return Response({
                                 'id': serializer.object.pk,
                             }, status=status.HTTP_200_OK)
