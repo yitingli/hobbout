@@ -23,13 +23,13 @@
         </div>
         <hr style="margin-top: 10px; margin-bottom: 10px">
         <div class="btn-group-vertical" style="width: 200px;">
-            {% for group in user.get_groups %}
-                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'"
-                    type="button" class="btn" style="width: 200px;">
-                    <p class="bold">{{ group.name }}</p>
-                    <p class="small white">{{ group.area }}</p>
-                    {% if group.location %}
-                        <p class="small white">{{ group.location }}</p>
+            {% for agroup in user.get_groups %}
+                <button onclick="window.location.href='{% url 'group:notices' agroup.pk %}'"
+                    type="button" class="btn {% if group.pk and group.pk == agroup.pk %}btn-success{% else %}btn-primary{% endif %}" style="width: 200px;">
+                    <p class="{% if group.pk and group.pk == agroup.pk %}bold{% endif %}">{{ agroup.name }}</p>
+                    <p class="small white">{{ agroup.area }}</p>
+                    {% if agroup.location %}
+                        <p class="small white">{{ agroup.location }}</p>
                     {% endif %}
                 </button>
                 <hr style="margin-top: 2px; margin-bottom: 2px">
@@ -40,18 +40,30 @@
     <div id="right-container" class="shadow right text-center">
         <div class="btn-group btn-group-lg middle">
             {% if group %}
-                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn">{% trans 'Notices' %}</button>
-                <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn">{% trans 'Discussions' %}</button>
-                <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn">{% trans 'Activities' %}</button>
+                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn {% if topic_type == 'N' %}bold{% endif %}" >{% trans 'Notices' %}</button>
+                <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn {% if topic_type == 'D' %}bold{% endif %}">{% trans 'Discussions' %}</button>
+                <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn {% if topic_type == 'A' %}bold{% endif %}">{% trans 'Activities' %}</button>
             {% else %}
             {% endif %}
         </div>
         <div>
-            {% if post_permission %}
+            {% if topic_type == 'A' %}
+                <div id="post-container" class="topic-container">
+                    <p class="bold gray" style="margin-bottom: 5px;">{% trans 'New Activity:' %}</p>
+                    <textarea id="new-post-name" rows="1" style="resize: none; width: 629px;">{% trans 'Title' %}</textarea>
+                    <textarea id="new-post-start-time" rows="1" style="resize: none; width: 207px;">{% now "SHORT_DATETIME_FORMAT" %}</textarea>
+                    <textarea id="new-post-end-time" rows="1" style="resize: none; width: 207px;">{% now "SHORT_DATETIME_FORMAT" %}</textarea>
+                    <textarea id="new-post-max-num" rows="1" style="resize: none; width: 206px;">{% trans 'Capacity' %}</textarea>
+                    <textarea id="new-post-max-num" rows="1" style="resize: none; width: 629px;">{% trans 'Address' %}</textarea>
+                    <textarea id="new-post-content" rows="3" style="width: 629px;">{% trans 'Content' %}</textarea>
+                    <button id="new-act-post-btn" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Create' %}</button>
+                    <div class="clear-both"></div>
+                </div>
+            {% elif post_permission %}
                 <div id="post-container" class="topic-container">
                     <p class="bold gray" style="margin-bottom: 5px;">{% trans 'New Post:' %}</p>
-                    <textarea id="new-post-name" rows="1" style="resize: none; width: 629px;"></textarea>
-                    <textarea id="new-post-content" rows="3" style="width: 629px;"></textarea>
+                    <textarea id="new-post-name" rows="1" style="resize: none; width: 629px;">{% trans 'Title' %}</textarea>
+                    <textarea id="new-post-content" rows="3" style="width: 629px;">{% trans 'Content' %}</textarea>
                     <button id="new-post-btn" data-type="{{ topic_type }}" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Post' %}</button>
                     <div class="clear-both"></div>
                 </div>
@@ -73,6 +85,15 @@
                     </div>
                     <div class="clear-both" style="margin-left: 20px; margin-right: 5px;">
                         <p style="padding-top: 5px;">{{ topic.content }}</p>
+                        {% if topic_type == 'A' %}
+                            <p>
+                                <span>{{ topic.start_time }}</span>
+                                <span>{{ topic.end_time }}</span>
+                            </p>
+                            {{ topic.address }}
+                            {{ topic.get_available_num }}
+                            {{ topic.paticipants }}
+                        {% endif %}
                         <hr style="margin-top: 5px; margin-bottom: 5px">
                         <textarea id="new-comment-{{ topic.id }}" rows="1" style="height: 30px; width: 539px;"></textarea>
                         <button data-id="{{ topic.id }}" class="new-comment-btn btn right small" style="height: 30px;">{% trans 'Comment' %}</button>

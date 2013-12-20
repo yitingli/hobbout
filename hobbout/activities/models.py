@@ -15,8 +15,10 @@ class Activity(TimeStampedModel):
     end_time = models.DateTimeField(null=True, blank=True)
     place = models.CharField(max_length=255, default="", blank=True)
 
+    comment_num = models.IntegerField(default=0, blank=True)
+
     participants = JSONField(null=True, blank=True)
-    pcount = models.IntegerField(default=0, blank=True)
+    p_num = models.IntegerField(default=0, blank=True)
 
 
 class ActivityComment(TimeStampedModel):
