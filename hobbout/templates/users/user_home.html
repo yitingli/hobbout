@@ -89,7 +89,7 @@
                                     <span style="margin-left: 30px;">{% trans 'End: ' %}<span style="font-size: 10px;">{{ topic.end_time }}</span></span>
                                 </p>
                                 <p class="small blue bold">{% trans 'Place: ' %}{{ topic.place }}</p>
-                                <p class="small gray bold">{% trans 'Max Participants: ' %}{{ topic.capacity }}</p>
+                                <p class="small gray bold">{% trans 'Max Participants (Creator Excluded): ' %}{{ topic.capacity }}</p>
                                 <p class="small gray bold">{% trans 'Remaining: ' %}{{ topic.get_available_num }}</p>
                                 <p class="small gray bold">{% trans 'Participants: ' %}{{ topic.get_participants }}</p>
                                 <button data-id="{{ topic.id }}" class="participate-act-btn btn btn-info btn-mini">{% trans 'Participate' %}</button>
