@@ -78,8 +78,8 @@
 
     $('.participate-act-btn').on('click', function(){
         var data = {};
-        var activity = $(this).attr('data-id')
-        data['activity'] = activity
+        var activity = $(this).attr('data-id');
+        data['activity'] = activity;
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -91,5 +91,12 @@
             error: function(res) {
             }
         });
+    });
+
+    $('.reply-btn').on('click', function(){
+        var id = $(this).attr('data-id');
+        var str = $(this).attr('data-str');
+        var val = $('#new-comment-'+id).val();
+        $('#new-comment-'+id).val('Reply to ' + str + ': ' + val);
     });
 })(jQuery);

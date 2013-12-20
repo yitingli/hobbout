@@ -107,21 +107,21 @@
                             <button data-id="{{ topic.id }}" class="new-act-comment-btn btn right small" style="height: 30px;">{% trans 'Comment' %}</button>
                         {% endif %}
                         {% for comment in topic.get_comments %}
-                        <div class="avatar-image-xtiny left" style="margin-top: 5px;">
-                            <img src="{% get_avatar comment.owner AVATAR_XTINY_CROPPED %}" width="{{ AVATAR_XTINY }}" height="{{ AVATAR_XTINY }}" />
-                        </div>
-                        <div style="margin-left: 30px;">
-                            <div style="margin-right: 10px;">
-                                <p style="margin-top: 5px;">
-                                    <span class="small bold" >{{ comment.owner.get_full_name }}</span>
-                                    <span class="small gray">@{{ comment.owner.username }}</span>
-                                    {% comment %}
-                                    <span class="gray right" style="font-size: 10px;">{{ comment.created|date:"SHORT_DATETIME_FORMAT" }}</span>
-                                    {% endcomment %}
-                                </p>
+                            <div class="avatar-image-xtiny left" style="margin-top: 5px;">
+                                <img src="{% get_avatar comment.owner AVATAR_XTINY_CROPPED %}" width="{{ AVATAR_XTINY }}" height="{{ AVATAR_XTINY }}" />
                             </div>
-                            <p class="clear-both small" style="">{{ comment.content }}</p>
-                        </div>
+                            <div style="margin-left: 30px;">
+                                <div style="margin-right: 10px;">
+                                    <p style="margin-top: 5px;">
+                                        <span class="small bold" >{{ comment.owner.get_full_name }}</span>
+                                        <span class="small gray">@{{ comment.owner.username }}</span>
+                                        {% comment %}
+                                        <span class="gray right" style="font-size: 10px;">{{ comment.created|date:"SHORT_DATETIME_FORMAT" }}</span>
+                                        {% endcomment %}
+                                    </p>
+                                </div>
+                                <p class="clear-both small" style="">{{ comment.content }}<span style="margin-left: 5px; font-size: 10px;"><button class="reply-btn" data-str="{{ comment.owner.username }}" data-id="{{ topic.id }}">{% trans ' Reply' %}</button></p>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
