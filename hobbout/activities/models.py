@@ -28,7 +28,7 @@ class Activity(TimeStampedModel):
         return self.capacity-self.p_num
 
     def get_participants(self):
-        users = UserActivityBridge.objects.filter(activity=self).order_by('-created').values_list('user__username', flat=True)
+        users = UserActivityBridge.objects.filter(activity=self).order_by('created').values_list('user__username', flat=True)
         return ', '.join(users)
 
 
