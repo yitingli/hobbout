@@ -10,7 +10,7 @@ class ActivityCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
         depth = 1
-        fields = ('name', 'content', 'group', 'start_time', 'end_time', 'place')
+        fields = ('name', 'content', 'group', 'start_time', 'end_time', 'place', 'capacity')
 
     def restore_object(self, attrs, instance=None):
         attrs['owner'] = self.context['user']
