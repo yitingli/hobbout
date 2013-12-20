@@ -57,9 +57,6 @@ class TingUserCreateForm(forms.ModelForm):
         user.set_registration_complete()
         if commit:
             user.save()
-            album = Album(owner=user, name="MicroBlog", is_public=False,\
-                      description="Used as default album for microblog images")
-            album.save()
         return user
 
 
