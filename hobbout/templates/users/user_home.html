@@ -120,7 +120,7 @@
                                         {% endcomment %}
                                     </p>
                                 </div>
-                                <p class="clear-both small" style="">{{ comment.content }}<span style="margin-left: 5px; font-size: 10px;"><button class="reply-btn" data-str="{{ comment.owner.username }}" data-id="{{ topic.id }}">{% trans ' Reply' %}</button></p>
+                                <p class="clear-both small" style="">{{ comment.content }}<span style="margin-left: 5px; font-size: 10px;"><button class="reply-btn btn btn-mini" style="height: 19px; font-size: 10px;" data-str="{{ comment.owner.username }}" data-id="{{ topic.id }}">{% trans ' Reply' %}</button></p>
                             </div>
                         {% endfor %}
                     </div>
