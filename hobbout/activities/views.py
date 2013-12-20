@@ -3,26 +3,27 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import ActivityCreateSerializer, ActivityCommentCreateSerializer
-from core.permissions import PostNoticePermission
+from .models import UserActivityBridge
+from .serializers import ActivityCreateSerializer, ActivityCommentCreateSerializer, UserActivityBridgeCreateSerializer
 
 
-class ActivityCreateView(APIView):
+class ActivityCreateAPIView(APIView):
 
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, PostNoticePermission)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     def post(self, request, format=None):
         serializer = ActivityCreateSerializer(data=request.DATA, context={'user': request.user})
         if serializer.is_valid():
-            self.check_object_permissions(request, serializer.object)
             serializer.save()
+            bridge = UserActivityBridge(user=request.user, activity=serializer.object)
+            bridge.save()
             return Response({
                                 'id': serializer.object.pk,
                             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ActivityCommentCreateView(APIView):
+class ActivityCommentCreateAPIView(APIView):
 
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
@@ -30,8 +31,22 @@ class ActivityCommentCreateView(APIView):
         serializer = ActivityCommentCreateSerializer(data=request.DATA, context={'user': request.user})
         if serializer.is_valid():
             serializer.save()
-            serializer.object.topic.comment_num = F('comment_num') + 1
-            serializer.object.topic.save()
+            serializer.object.activity.comment_num = F('comment_num') + 1
+            serializer.object.activity.save()
+            return Response({
+                                'id': serializer.object.pk,
+                            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserActivityBridgeCreateAPIView(APIView):
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    def post(self, request, format=None):
+        serializer = UserActivityBridgeCreateSerializer(data=request.DATA, context={'user': request.user})
+        if serializer.is_valid():
+            serializer.save()
             return Response({
                                 'id': serializer.object.pk,
                             }, status=status.HTTP_200_OK)

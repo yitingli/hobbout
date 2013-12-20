@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Activity, ActivityComment
+from .models import Activity, ActivityComment, UserActivityBridge
 
 
 class ActivityCreateSerializer(serializers.ModelSerializer):
@@ -31,3 +31,18 @@ class ActivityCommentCreateSerializer(serializers.ModelSerializer):
         attrs['owner'] = self.context['user']
         comment = ActivityComment(**attrs)
         return comment
+
+
+class UserActivityBridgeCreateSerializer(serializers.ModelSerializer):
+
+    activity = serializers.PrimaryKeyRelatedField()
+
+    class Meta:
+        model = UserActivityBridge
+        depth = 1
+        fields = ('activity', )
+
+    def restore_object(self, attrs, instance=None):
+        attrs['user'] = self.context['user']
+        bridge = UserActivityBridge(**attrs)
+        return bridge

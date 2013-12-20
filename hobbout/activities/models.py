@@ -17,8 +17,19 @@ class Activity(TimeStampedModel):
 
     comment_num = models.IntegerField(default=0, blank=True)
 
-    participants = JSONField(null=True, blank=True)
+    capacity = models.IntegerField(default=0, blank=True)
     p_num = models.IntegerField(default=0, blank=True)
+
+    def get_comments(self):
+        comments = ActivityComment.objects.filter(activity=self).order_by('-created')
+        return comments
+
+    def get_available_num(self):
+        return self.capacity-self.p_num
+
+    def get_participants(self):
+        users = UserActivityBridge.objects.filter(activity=self).order_by('-created').values_list('user__username', flat=True)
+        return ', '.join(users)
 
 
 class ActivityComment(TimeStampedModel):
@@ -27,3 +38,12 @@ class ActivityComment(TimeStampedModel):
     owner = models.ForeignKey('users.TingUser')
     activity = models.ForeignKey('activities.Activity')
     parent_comment = models.ForeignKey('self', null=True, blank=True)
+
+
+class UserActivityBridge(TimeStampedModel):
+
+    activity = models.ForeignKey('activities.Activity')
+    user = models.ForeignKey('users.TingUser')
+
+    class Meta:
+        unique_together = (('user', 'activity'), )

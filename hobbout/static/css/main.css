@@ -505,6 +505,10 @@ textarea:focus {
     color: #999;
 }
 
+.blue {
+    color: #003366;
+}
+
 .white {
     color: #FFF;
 }

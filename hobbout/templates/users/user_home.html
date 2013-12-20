@@ -25,7 +25,7 @@
         <div class="btn-group-vertical" style="width: 200px;">
             {% for agroup in user.get_groups %}
                 <button onclick="window.location.href='{% url 'group:notices' agroup.pk %}'"
-                    type="button" class="btn {% if group.pk and group.pk == agroup.pk %}btn-success{% else %}btn-primary{% endif %}" style="width: 200px;">
+                    type="button" class="btn {% if group.pk and group.pk == agroup.pk %}btn-success{% else %}{% endif %}" style="width: 200px;">
                     <p class="{% if group.pk and group.pk == agroup.pk %}bold{% endif %}">{{ agroup.name }}</p>
                     <p class="small white">{{ agroup.area }}</p>
                     {% if agroup.location %}
@@ -51,10 +51,10 @@
                 <div id="post-container" class="topic-container">
                     <p class="bold gray" style="margin-bottom: 5px;">{% trans 'New Activity:' %}</p>
                     <textarea id="new-post-name" rows="1" style="resize: none; width: 629px;">{% trans 'Title' %}</textarea>
-                    <textarea id="new-post-start-time" rows="1" style="resize: none; width: 207px;">{% now "SHORT_DATETIME_FORMAT" %}</textarea>
-                    <textarea id="new-post-end-time" rows="1" style="resize: none; width: 207px;">{% now "SHORT_DATETIME_FORMAT" %}</textarea>
-                    <textarea id="new-post-max-num" rows="1" style="resize: none; width: 206px;">{% trans 'Capacity' %}</textarea>
-                    <textarea id="new-post-max-num" rows="1" style="resize: none; width: 629px;">{% trans 'Address' %}</textarea>
+                    <textarea id="new-post-start-time" rows="1" style="resize: none; width: 207px;">{% now "Y-m-d H:m" %}</textarea>
+                    <textarea id="new-post-end-time" rows="1" style="resize: none; width: 207px;">{% now "Y-m-d H:m" %}</textarea>
+                    <textarea id="new-post-capacity" rows="1" style="resize: none; width: 206px;">{% trans 'Capacity' %}</textarea>
+                    <textarea id="new-post-place" rows="1" style="resize: none; width: 629px;">{% trans 'Address' %}</textarea>
                     <textarea id="new-post-content" rows="3" style="width: 629px;">{% trans 'Content' %}</textarea>
                     <button id="new-act-post-btn" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Create' %}</button>
                     <div class="clear-both"></div>
@@ -77,26 +77,35 @@
                         <p style="margin-top: 5px;">
                             <span class="bold" >{{ topic.owner.get_full_name }}</span>
                             <span class="small gray">@{{ topic.owner.username }}</span>
-                            {% comment %}
-                            <span class="gray" style="font-size: 10px;">{{ topic.created|date:"SHORT_DATETIME_FORMAT" }}</span>
-                            {% endcomment %}
                         </p>
                         <p class="bold" style="font-size: 18px;">{{ topic.name }}</p>
                     </div>
                     <div class="clear-both" style="margin-left: 20px; margin-right: 5px;">
                         <p style="padding-top: 5px;">{{ topic.content }}</p>
                         {% if topic_type == 'A' %}
-                            <p>
-                                <span>{{ topic.start_time }}</span>
-                                <span>{{ topic.end_time }}</span>
-                            </p>
-                            {{ topic.address }}
-                            {{ topic.get_available_num }}
-                            {{ topic.paticipants }}
+                            <div style="padding: 10px; padding-left: 20px;">
+                                <p class="small blue bold">
+                                    <span>{% trans 'Start: ' %}<span style="font-size: 11px;">{{ topic.start_time }}</span></span>
+                                    <span style="margin-left: 30px;">{% trans 'End: ' %}<span style="font-size: 10px;">{{ topic.end_time }}</span></span>
+                                </p>
+                                <p class="small blue bold">{% trans 'Place: ' %}{{ topic.place }}</p>
+                                <p class="small gray bold">{% trans 'Max Participants: ' %}{{ topic.capacity }}</p>
+                                <p class="small gray bold">{% trans 'Remaining: ' %}{{ topic.get_available_num }}</p>
+                                <p class="small gray bold">{% trans 'Participants: ' %}{{ topic.get_participants }}</p>
+                                <button data-id="{{ topic.id }}" class="participate-act-btn btn btn-info btn-mini">{% trans 'Participate' %}</button>
+                            </div>
                         {% endif %}
+                        <p class="small gray">
+                            {% trans 'comment: ' %}{{ topic.comment_num }}
+                            <span class="right" style="margin-left: 10px; font-size: 10px;">{% trans 'posted on: ' %}{{ topic.created }}</span>
+                        </p>
                         <hr style="margin-top: 5px; margin-bottom: 5px">
                         <textarea id="new-comment-{{ topic.id }}" rows="1" style="height: 30px; width: 539px;"></textarea>
-                        <button data-id="{{ topic.id }}" class="new-comment-btn btn right small" style="height: 30px;">{% trans 'Comment' %}</button>
+                        {% if topic_type != 'A' %}
+                            <button data-id="{{ topic.id }}" class="new-comment-btn btn right small" style="height: 30px;">{% trans 'Comment' %}</button>
+                        {% else %}
+                            <button data-id="{{ topic.id }}" class="new-act-comment-btn btn right small" style="height: 30px;">{% trans 'Comment' %}</button>
+                        {% endif %}
                         {% for comment in topic.get_comments %}
                         <div class="avatar-image-xtiny left" style="margin-top: 5px;">
                             <img src="{% get_avatar comment.owner AVATAR_XTINY_CROPPED %}" width="{{ AVATAR_XTINY }}" height="{{ AVATAR_XTINY }}" />
