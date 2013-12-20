@@ -27,9 +27,9 @@
                 <button onclick="window.location.href='{% url 'group:notices' agroup.pk %}'"
                     type="button" class="btn {% if group.pk and group.pk == agroup.pk %}btn-success{% else %}{% endif %}" style="width: 200px;">
                     <p class="{% if group.pk and group.pk == agroup.pk %}bold{% endif %}">{{ agroup.name }}</p>
-                    <p class="small white">{{ agroup.area }}</p>
+                    <p class="small {% if group.pk and group.pk == agroup.pk %}white{% else %}gray{% endif %}">{{ agroup.area }}</p>
                     {% if agroup.location %}
-                        <p class="small white">{{ agroup.location }}</p>
+                        <p class="small {% if group.pk and group.pk == agroup.pk %}white{% else %}gray{% endif %}">{{ agroup.location }}</p>
                     {% endif %}
                 </button>
                 <hr style="margin-top: 2px; margin-bottom: 2px">
