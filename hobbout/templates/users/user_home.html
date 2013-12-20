@@ -40,9 +40,9 @@
     <div id="right-container" class="shadow right text-center">
         <div class="btn-group btn-group-lg middle">
             {% if group %}
-                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn {% if topic_type == 'N' %}bold{% endif %}" >{% trans 'Notices' %}</button>
-                <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn {% if topic_type == 'D' %}bold{% endif %}">{% trans 'Discussions' %}</button>
-                <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn {% if topic_type == 'A' %}bold{% endif %}">{% trans 'Activities' %}</button>
+                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn {% if topic_type == 'N' %}bold btn-success{% endif %}" >{% trans 'Notices' %}</button>
+                <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn {% if topic_type == 'D' %}bold btn-success{% endif %}">{% trans 'Discussions' %}</button>
+                <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn {% if topic_type == 'A' %}bold btn-success{% endif %}">{% trans 'Activities' %}</button>
             {% else %}
             {% endif %}
         </div>
