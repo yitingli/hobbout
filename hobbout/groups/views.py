@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 
 from users.models import TingUser
 from groups.models import Group, UserGroupBridge
+from .serializers import GroupCreateSerializer, UserGroupBridgeCreateSerializer
 
 
 class GroupNoticesView(DetailView):
@@ -69,4 +70,27 @@ class GroupAddView(TemplateView):
 
 class GroupCreateAPIView(APIView):
 
-    pass
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    def post(self, request, format=None):
+        serializer = GroupCreateSerializer(data=request.DATA, context={'user': request.user})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                                'id': serializer.object.pk,
+                            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserGroupBridgeCreateAPIView(APIView):
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    def post(self, request, format=None):
+        serializer = UserGroupBridgeCreateSerializer(data=request.DATA, context={'user': request.user})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                                'id': serializer.object.pk,
+                            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

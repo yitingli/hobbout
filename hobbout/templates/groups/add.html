@@ -70,7 +70,7 @@
                         <p class="small gray bold">{% trans 'Creation Date: ' %}{{ group.created|date:"D. M d Y" }}</p>
                         <p>{{ group.brief_description }}</p>
                         <p>{{ group.description }}</p>
-                        <button id="join-group-btn" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Join' %}</button>
+                        <button class="join-group-btn btn btn-primary right btn-small" data-id="{{ group.id }}" style="margin-top: 5px; width: 79px;">{% trans 'Join' %}</button>
                         <div class="clear-both"></div>
                     </div>
                 </div>

@@ -3,16 +3,13 @@
     $('#new-group-post-btn').on('click', function(){
         var data = {};
         data['name'] = $('#new-post-name').val();
-        data['content'] = $('#new-post-content').val();
-        data['group'] = $(this).attr('data-id');
-        data['start_time'] = $('#new-post-start-time').val();
-        data['end_time'] = $('#new-post-end-time').val();
-        data['capacity'] = $('#new-post-capacity').val();
-        data['place'] = $('#new-post-place').val();
+        data['area'] = $('#new-post-area').val();
+        data['brief_description'] = $('#new-post-bdes').val();
+        data['description'] = $('#new-post-des').val();
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: '/api/activity/create/',
+            url: '/api/group/create/',
             data: JSON.stringify(data),
             success: function(res) {
                 location.reload();
@@ -22,14 +19,14 @@
         });
     });
 
-    $('.participate-act-btn').on('click', function(){
+    $('.join-group-btn').on('click', function(){
         var data = {};
-        var activity = $(this).attr('data-id')
-        data['activity'] = activity
+        var group = $(this).attr('data-id')
+        data['group'] = group
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: '/api/activity/participate/',
+            url: '/api/group/join/',
             data: JSON.stringify(data),
             success: function(res) {
                 location.reload();
