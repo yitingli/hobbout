@@ -52,3 +52,13 @@ class GroupActivitiesView(DetailView):
         context['topics'] = self.object.get_activities()
         context['topic_type'] = 'A'
         return context
+
+
+class GroupAddView(TemplateView):
+
+    template_name = 'groups/add.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupAddView, self).get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+        return context

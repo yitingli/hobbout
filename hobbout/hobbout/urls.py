@@ -5,6 +5,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from .views import HomeView
+from groups.views import GroupAddView
 
 
 admin.autodiscover()
@@ -24,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^group/(?P<pk>[0-9]+)/', include('groups.urls', namespace='group')),
+    url(r'^group/add/', GroupAddView.as_view(), name='group-add'),
 
 )
 

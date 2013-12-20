@@ -1,0 +1,72 @@
+{% extends 'user_page_base.html' %}
+{% load i18n %}
+{% load users_tags %}
+{% load compressed %}
+
+{% block content %}
+    <div id="left-container" class="shadow left">
+        <div id="left-user-info-container">
+            <div class="avatar-image left">
+                <img src="{% get_avatar user AVATAR_TINY_CROPPED %}" width="{{ AVATAR_TINY }}" height="{{ AVATAR_TINY }}" />
+            </div>
+            <div class="right" style="width: 130px;">
+                <p class="bold" style="margin-top: 5px;">{{ user.get_full_name }}</p>
+                <p class="small gray" >@{{ user.username }}</p>
+            </div>
+            <div class="clear-both" style="padding-top: 10px;">
+                <p class="">{{ user.email }}</p>
+                {% if user.birth_date %}
+                    <p class="">{{ user.birth_date }}</p>
+                {% endif %}
+            </div>
+            <div>{{ user.brief_description }}</div>
+        </div>
+        <hr style="margin-top: 10px; margin-bottom: 10px">
+        <div class="btn-group-vertical" style="width: 200px;">
+            {% for agroup in user.get_groups %}
+                <button onclick="window.location.href='{% url 'group:notices' agroup.pk %}'"
+                    type="button" class="btn" style="width: 200px;">
+                    <p class="bold">{{ agroup.name }}</p>
+                    <p class="small white">{{ agroup.area }}</p>
+                    {% if agroup.location %}
+                        <p class="small white">{{ agroup.location }}</p>
+                    {% endif %}
+                </button>
+                <hr style="margin-top: 2px; margin-bottom: 2px">
+            {% endfor %}
+            <button onclick="window.location.href='{% url 'group-add' %}'" type="button" class="btn btn-success bold" style="width: 200px;">+</button>
+        </div>
+    </div>
+    <div id="right-container" class="shadow right text-center">
+        <div class="btn-group btn-group-lg middle">
+            {% if group %}
+                <button onclick="window.location.href='{% url 'group:notices' group.pk %}'" type="button" class="btn {% if topic_type == 'N' %}bold btn-success{% endif %}" >{% trans 'Notices' %}</button>
+                <button onclick="window.location.href='{% url 'group:discussions' group.pk %}'" type="button" class="btn {% if topic_type == 'D' %}bold btn-success{% endif %}">{% trans 'Discussions' %}</button>
+                <button onclick="window.location.href='{% url 'group:activities' group.pk %}'" type="button" class="btn {% if topic_type == 'A' %}bold btn-success{% endif %}">{% trans 'Activities' %}</button>
+            {% else %}
+            {% endif %}
+        </div>
+        <div>
+            <div id="post-container" class="topic-container">
+                <p class="bold gray" style="margin-bottom: 5px;">{% trans 'New Group:' %}</p>
+                <textarea id="new-post-name" rows="1" style="resize: none; width: 420px;">{% trans 'Name' %}</textarea>
+                <textarea id="new-post-capacity" rows="1" style="resize: none; width: 206px;">{% trans 'Area' %}</textarea>
+                <textarea id="new-post-place" rows="1" style="resize: none; width: 629px;">{% trans 'Brief' %}</textarea>
+                <textarea id="new-post-content" rows="3" style="width: 629px;">{% trans 'Description' %}</textarea>
+                <button id="new-act-post-btn" data-id="{{ group.id }}" class="btn btn-primary right btn-small" style="margin-top: 5px; width: 79px;">{% trans 'Create' %}</button>
+                <div class="clear-both"></div>
+            </div>
+            {% for topic in topics %}
+                <div class="topic-container" data-id="{{ topic.id }}">
+                    
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="clear-both">
+    </div>
+{% endblock %}
+
+{% block js_in_body %}
+    {% compressed_js 'topic' %}
+{% endblock %}

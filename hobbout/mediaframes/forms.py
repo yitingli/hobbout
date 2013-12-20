@@ -3,7 +3,6 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from .models import MediaFrame
-from albums.models import Album
 from mediabox.models import MediaImage, MediaVideo
 
 
@@ -12,7 +11,6 @@ class MediaFrameCreateForm(forms.ModelForm):
     description = forms.CharField(max_length=255, widget=forms.Textarea, required=False)
     image = forms.ImageField(required=False)
     video_code = forms.CharField(max_length=255, widget=forms.Textarea, required=False)
-    album = forms.ModelChoiceField(queryset=None, empty_label=None)
 
     class Meta:
         model = MediaFrame
@@ -21,10 +19,6 @@ class MediaFrameCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.owner = kwargs['initial']['owner']
         super(MediaFrameCreateForm, self).__init__(*args, **kwargs)
-        self.album = Album.objects.filter(owner=self.owner).order_by('-created')
-        self.fields['album'].queryset = self.album
-        if len(self.album) > 0:
-            self.fields['album'].initial = self.album[0]
 
     def clean(self):
         image = self.cleaned_data['image']
@@ -60,7 +54,6 @@ class VideoFrameCreateForm(forms.ModelForm):
     description = forms.CharField(max_length=255, widget=forms.Textarea, required=False)
     video = forms.FileField(required=False)
     video_code = forms.CharField(max_length=255, widget=forms.Textarea, required=False)
-    album = forms.ModelChoiceField(queryset=None, empty_label=None)
 
     class Meta:
         model = MediaFrame
@@ -69,10 +62,6 @@ class VideoFrameCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.owner = kwargs['initial']['owner']
         super(VideoFrameCreateForm, self).__init__(*args, **kwargs)
-        self.album = Album.objects.filter(owner=self.owner).order_by('-created')
-        self.fields['album'].queryset = self.album
-        if len(self.album) > 0:
-            self.fields['album'].initial = self.album[0]
 
     def clean_video(self):
         video = self.cleaned_data['video']
