@@ -258,11 +258,15 @@ LOGGING = {
 
 AUTH_USER_MODEL = 'users.TingUser'
 
+FACEBOOK_APP_ID='161541144017980'
+FACEBOOK_API_SECRET='ce87494d68a0a5ec53e525688ac6db0f'
+
 AUTHENTICATION_BACKENDS = (
     'users.backends.weibo.WeiboBackend',
     #'social_auth.backends.contrib.weibo.WeiboBackend',
     'users.backends.auth.EmailOrUsernameModelBackend',
-    #'django.contrib.auth.backends.ModelBackend'
+    #'django.contrib.auth.backends.ModelBackend',
+    'social_auth.backends.facebook.FacebookBackend',
 )
 
 PAGE_SIZE = {
